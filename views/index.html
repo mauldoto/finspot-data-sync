@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Excel File Upload</title>
+  <title>Finspot Data Sync</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -24,28 +24,51 @@
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
-      background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
     }
-    button:hover {
+    .btn-success {
+      background-color: #4CAF50;
+    }
+    button.btn-success:hover {
       background-color: #45a049;
+    }
+    .btn-info {
+      background-color: #2231fd;
+    }
+    button.btn-info:hover {
+      background-color: #000ed1;
+    }
+    .btn-danger {
+      background-color: #ee2b08;
+    }
+    button.btn-danger:hover {
+      background-color: #ce2305;
     }
     .file-info {
       margin-top: 20px;
       font-size: 14px;
       color: #555;
     }
+    button:disabled {
+      opacity: 0.5;        /* Bikin kusam/transparan */
+      cursor: not-allowed; /* Biar ada tanda kursor dilarang */
+      background-color: #ccc; /* Bisa juga ganti warna background */
+      color: #666;         /* Warna teks lebih pucat */
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container container-input">
     <h1>Upload Excel File</h1>
-    <button id="uploadBtn">Pilih File Excel</button>
+    <button id="uploadBtn" class="btn-success">Pilih File Excel</button>
     <div class="file-info" id="fileInfo"></div>
-  </div>
 
+    <button id="tambahBtn" class="btn-success" disabled>Tambah</button>
+    <button id="updateBtn" class="btn-info" disabled>Update</button>
+    <button id="deleteBtn" class="btn-danger" disabled>Hapus</button>
+  </div>
   <script src="../lib/renderer.js"></script>
 </body>
 </html>
