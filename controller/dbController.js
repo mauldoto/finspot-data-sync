@@ -3,8 +3,8 @@ const mysql = require("mysql2/promise");
 async function dbconnection() {
   return await mysql.createConnection({
     host: "localhost",
-    user: "mauldoto",
-    password: "fafifu",
+    user: "root",
+    password: "",
     database: "fin_pro",
   });
 }
@@ -34,8 +34,7 @@ async function addEmployee(data) {
     );
 
     if (pegawaiRows.length > 0) {
-      console.log("Pegawai dengan nip tersebut sudah ada");
-      return;
+      throw new Error("Pegawai dengan nip tersebut sudah ada");
     }
 
     const ids = await connection.execute(
@@ -62,18 +61,6 @@ async function addEmployee(data) {
       [data["Lokasi"]]
     );
 
-    console.log([
-      lastId,
-      data["PIN"],
-      data["NIP"],
-      data["Nama"],
-      data["Tempat Lahir"] ? data["Tempat Lahir"] : null,
-      data["Tanggal Lahir"] ? parseDate(data["Tanggal Lahir"]) : null,
-      p1[0][0].pembagian1_id,
-      p2[0][0].pembagian2_id,
-      p3[0][0].pembagian3_id,
-    ]);
-
     // . insert data baru ke database
     const insertResult = await connection.execute(
       "INSERT INTO pegawai (pegawai_id, pegawai_pin, pegawai_nip, pegawai_nama, tempat_lahir, tgl_lahir, pembagian1_id, pembagian2_id, pembagian3_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -92,8 +79,8 @@ async function addEmployee(data) {
 
     console.log("✅ Employee inserted");
   } catch (err) {
-    console.error("❌ Error:", err);
-    throw new Error("❌ Error:", err);
+    console.error(err);
+    throw new Error(err.message);
   } finally {
     await connection.end();
   }
@@ -111,8 +98,7 @@ async function updateEmployee(data) {
     );
 
     if (pegawaiRows.length === 0) {
-      console.log("Pegawai dengan nip tersebut tidak ada");
-      return;
+      throw new Error("Pegawai dengan nip tersebut tidak ada");
     }
 
     // 1. cari pembagian1
@@ -148,8 +134,8 @@ async function updateEmployee(data) {
 
     console.log("✅ Employee updated");
   } catch (err) {
-    console.error("❌ Error:", err);
-    throw new Error("❌ Error:", err);
+    console.error(err);
+    throw new Error(err.message);
   } finally {
     await connection.end();
   }
@@ -167,8 +153,7 @@ async function deleteEmployee(data) {
     );
 
     if (pegawaiRows.length === 0) {
-      console.log("Pegawai dengan nip tersebut tidak ada");
-      return;
+      throw new Error("Pegawai dengan nip tersebut tidak ada");
     }
 
     // Update orders dengan stock yang diambil
@@ -179,8 +164,8 @@ async function deleteEmployee(data) {
 
     console.log("✅ Employee deleted");
   } catch (err) {
-    console.error("❌ Error:", err);
-    throw new Error("❌ Error:", err);
+    console.error(err);
+    throw new Error(err.message);
   } finally {
     await connection.end();
   }
