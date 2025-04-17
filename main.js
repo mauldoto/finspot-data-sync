@@ -15,7 +15,7 @@ const createWindow = () => {
   });
 
   win.loadFile(path.join(__dirname, "views", "index.html"));
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   // Menu template
   const template = [
