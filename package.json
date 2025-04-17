@@ -29,6 +29,7 @@
   "dependencies": {
     "mysql2": "^3.14.0",
     "sqlite3": "^5.1.7",
+    "sweetalert2": "^11.19.1",
     "xlsx": "^0.18.5"
   }
 }
