@@ -1,6 +1,6 @@
 const { app, BrowserWindow, Menu, shell } = require("electron/main");
 const path = require("path");
-const { registerOpenDialogHandler } = require("./controller/ipcController");
+const { registerIpcHandler } = require("./controller/ipcController");
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -15,7 +15,7 @@ const createWindow = () => {
   });
 
   win.loadFile(path.join(__dirname, "views", "index.html"));
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   // Menu template
   const template = [
@@ -55,7 +55,7 @@ const createWindow = () => {
 };
 
 app.whenReady().then(() => {
-  registerOpenDialogHandler();
+  registerIpcHandler();
   createWindow();
 
   app.on("activate", () => {
